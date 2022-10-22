@@ -1,0 +1,23 @@
+name: 'Triple-T validation action'
+description: 'Unnoficial action to validate Triple-T store files'
+
+author: 'TrianguloY'
+
+branding:
+  icon: 'play-circle'
+  color: 'green'
+
+
+inputs:
+  appFolder:
+    description: 'Folder app'
+    required: true
+    default: 'app'
+  ignore:
+    description: 'Comma separated list of checks to ignore'
+    required: true
+    default: ''
+    
+runs:
+  using: 'node16'
+  main: 'main.js'
