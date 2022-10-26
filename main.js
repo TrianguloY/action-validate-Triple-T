@@ -19,12 +19,14 @@ function main(){
   console.log("Validating files:");
 
   // foreach sourceSet
-  dirs(join(appFolder,'src')).forEach(([sourceSet, sourceSetPath]) => { 
+  let srcPath = join(appFolder, 'src');
+  if(!existsSync(srcPath)) log('SKIP', `No src folder found (${srcPath}), is 'appFolder' input correct?`);
+  else dirs(srcPath).forEach(([sourceSet, sourceSetPath]) => {
     log(`SourceSet '${sourceSet}':`); 
     pad(()=>{
 
       // check default language file
-      let defaultLanguagePath = join(sourceSetPath, "play", "default-language.txt")
+      let defaultLanguagePath = join(sourceSetPath, "play", "default-language.txt");
       // check exists
       if(!existsSync(defaultLanguagePath)){
         log('ERROR', `'default-language.txt'`);
@@ -41,7 +43,9 @@ function main(){
       }
 
       // for each listing locale
-      dirs(join(sourceSetPath, "play", "listings")).forEach(([locale, localePath]) => {
+      let listingsPath = join(sourceSetPath, "play", "listings");
+      if(!existsSync(listingsPath)) log('SKIP', `No listings folder found (${listingsPath}), skipped`);
+      else dirs(listingsPath).forEach(([locale, localePath]) => {
         let validLocale = validLocales.includes(locale);
         log(validLocale?'OK':'ERROR', `Locale '${locale}':`);
 
@@ -79,7 +83,9 @@ function main(){
       });
 
       // for each release locale
-      dirs(join(sourceSetPath, "play", "release-notes")).forEach(([locale, localePath]) => {
+      let releaseNotesPath = join(sourceSetPath, "play", "release-notes");
+      if(!existsSync(releaseNotesPath)) log('SKIP', `No release-notes folder found (${releaseNotesPath}), skipped`);
+      else dirs(releaseNotesPath).forEach(([locale, localePath]) => {
         let validLocale = validLocales.includes(locale);
         log(validLocale?'OK':'ERROR', `Locale '${locale}':`);
 
