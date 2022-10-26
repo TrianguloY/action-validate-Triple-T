@@ -13,6 +13,14 @@ Current checks, validated for all sourceSet, locales and tracks:
 - `full-description.txt too large`: The file _$appFolder/src/[sourceSet]/play/listings/[locale]/full-description.txt_ must be 4000 or less characters long (if exists).
 - `Invalid release-notes locale`: locale folders under _$appFolder/src/[sourceSet]/play/release-notes_ must match an [available language](https://support.google.com/googleplay/android-developer/answer/9844778#zippy=%2Cview-list-of-available-languages).
 - `Changelog too large`: The files _$appFolder/src/[sourceSet]/play/release-notes/[locale]/[track].txt_ must be 500 or less characters long.
+- `Too many images in icon`: The folder _${appFolder}/src/[sourceSet]/play/listings/[locale]/graphics/icon/_ must have 1 image (png|jpg|jpeg) or less.
+- `Too many images in feature-graphic`: The folder _${appFolder}/src/[sourceSet]/play/listings/[locale]/graphics/feature-graphic/_ must have 1 image (png|jpg|jpeg) or less.
+- `Too many images in phone-screenshots`: The folder _${appFolder}/src/[sourceSet]/play/listings/[locale]/graphics/phone-screenshots/_ must have 8 images (png|jpg|jpeg) or less.
+- `Too many images in tablet-screenshots`: The folder _${appFolder}/src/[sourceSet]/play/listings/[locale]/graphics/tablet-screenshots/_ must have 8 images (png|jpg|jpeg) or less.
+- `Too many images in large-tablet-screenshots`: The folder _${appFolder}/src/[sourceSet]/play/listings/[locale]/graphics/large-tablet-screenshots/_ must have 8 images (png|jpg|jpeg) or less.
+- `Too many images in tv-banner`: The folder _${appFolder}/src/[sourceSet]/play/listings/[locale]/graphics/tv-banner/_ must have 1 image (png|jpg|jpeg) or less.
+- `Too many images in tv-screenshots`: The folder _${appFolder}/src/[sourceSet]/play/listings/[locale]/graphics/tv-screenshots/_ must have 8 images (png|jpg|jpeg) or less.
+- `Too many images in wear-screenshots`: The folder _${appFolder}/src/[sourceSet]/play/listings/[locale]/graphics/wear-screenshots/_ must have 8 images (png|jpg|jpeg) or less.
 
 
 ## Inputs

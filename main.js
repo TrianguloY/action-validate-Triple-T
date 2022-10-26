@@ -47,7 +47,7 @@ function main(){
       if(!existsSync(listingsPath)) log('SKIP', `No listings folder found (${listingsPath}), skipped`);
       else dirs(listingsPath).forEach(([locale, localePath]) => {
         let validLocale = validLocales.includes(locale);
-        log(validLocale?'OK':'ERROR', `Locale '${locale}':`);
+        log(validLocale?'OK':'ERROR', `Listing locale '${locale}':`);
 
         // check locale label
         if(!validLocale){
@@ -79,6 +79,47 @@ function main(){
             }
           });
 
+          // check images properties
+          ([
+            ["icon", 1, 512, 512],
+            ["feature-graphic", 1, 1024, 500],
+            ["phone-screenshots", 8, [320, 3840], [320, 3840]],
+            ["tablet-screenshots", 8, [320, 3840], [320, 3840]],
+            ["large-tablet-screenshots", 8, [320, 3840], [320, 3840]],
+            ["tv-banner", 1, 1280, 720],
+            ["tv-screenshots", 8, [320, 3840], [320, 3840]],
+            ["wear-screenshots", 8, [320, 3840], [320, 3840]],
+          ]).forEach(([folder, maxImages, width, height]) => {
+            folder = join('graphics', folder);
+
+            // get folder
+            const folderPath = join(localePath, folder);
+            if(existsSync(folderPath)){
+              // folder exists, get images
+              const images = files(folderPath).filter(([file, _]) => /\.(png|jpg|jpeg)$/.test(file));
+
+              // check amount
+              log(images.length>maxImages?'ERROR':'OK', `'${folder}/' images: ${images.length}/${maxImages}`);
+              if(images.length > maxImages){
+                // too many images
+                error(`Too many images in ${folder}`, folderPath, `Folder '${folder}' (${folderPath}) must have ${maxImages} or less images (png, jpg or jpeg) but has ${images.length}.`);
+              }
+
+              // check each image
+              pad(() => images.forEach(([image, imagePath])=>{
+
+                // TODO: get image size
+                log('?', `'${image}' width: ?/${width}, height: ?/${height}`);
+
+              }));
+
+            }else{
+              // no file
+              log("SKIP", `'${folder}/': not found, skipped`);
+            }
+
+          });
+
         });
       });
 
@@ -87,7 +128,7 @@ function main(){
       if(!existsSync(releaseNotesPath)) log('SKIP', `No release-notes folder found (${releaseNotesPath}), skipped`);
       else dirs(releaseNotesPath).forEach(([locale, localePath]) => {
         let validLocale = validLocales.includes(locale);
-        log(validLocale?'OK':'ERROR', `Locale '${locale}':`);
+        log(validLocale?'OK':'ERROR', `Release-notes locale '${locale}':`);
 
         // check locale label
         if(!validLocale){
