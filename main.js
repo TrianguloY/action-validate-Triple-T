@@ -1,6 +1,7 @@
 // import
 const { lstatSync, readdirSync, readFileSync, existsSync } = require('fs');
 const { join } = require('path');
+const { execSync } = require('child_process');
 
 // inputs
 const ignored = process.env.INPUT_IGNORE.split(/ *, */);
@@ -89,7 +90,7 @@ function main(){
             ["tv-banner", 1, 1280, 720],
             ["tv-screenshots", 8, [320, 3840], [320, 3840]],
             ["wear-screenshots", 8, [320, 3840], [320, 3840]],
-          ]).forEach(([folder, maxImages, width, height]) => {
+          ]).forEach(([folder, maxImages, validWidth, validHeight]) => {
             folder = join('graphics', folder);
 
             // get folder
@@ -108,8 +109,17 @@ function main(){
               // check each image
               pad(() => images.forEach(([image, imagePath])=>{
 
-                // TODO: get image size
-                log('?', `'${image}' width: ?/${width}, height: ?/${height}`);
+                // check dimensions
+                let [width, height] = getDimensions(imagePath);
+                let compare = (value, range) => (typeof range) == 'number' ? value == range : value >= range[0] && value <= range[1];
+                let validDimensions = compare(width, validWidth) && compare(height, validHeight);
+                log(validDimensions ? 'OK' : 'ERROR', `'${image}' width: ${width}/${JSON.stringify(validWidth)}, height: ${height}/${JSON.stringify(validHeight)}`);
+
+                if(!validDimensions){
+                  // invalid dimensions, error
+                  let txt = (range) => (typeof range) == 'number' ? range : `between ${range[0]} and ${range[1]}`;
+                  error(`Invalid {folder} image dimensions`, imagePath, `The ${folder} image ${image} (${imagePath}) must have width ${txt(validWidth)}, has ${width}; and height ${txt(validHeight)}, has ${height}`);
+                }
 
               }));
 
@@ -197,6 +207,15 @@ function files(folder) {
   return readdirSync(folder)
     .map(file => [file, join(folder, file)])
     .filter(([file, path]) => lstatSync(path).isFile());
+}
+
+
+
+// image utils
+
+function getDimensions(path){
+  // path as input to sanitize it
+  return execSync('file -f -', {input:path}).toString().trim().match(/[\d]+ *x *[\d]+/).pop().split(/ *x */);
 }
 
 

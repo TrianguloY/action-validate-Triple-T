@@ -21,6 +21,14 @@ Current checks, validated for all sourceSet, locales and tracks:
 - `Too many images in tv-banner`: The folder _${appFolder}/src/[sourceSet]/play/listings/[locale]/graphics/tv-banner/_ must have 1 image (png|jpg|jpeg) or less.
 - `Too many images in tv-screenshots`: The folder _${appFolder}/src/[sourceSet]/play/listings/[locale]/graphics/tv-screenshots/_ must have 8 images (png|jpg|jpeg) or less.
 - `Too many images in wear-screenshots`: The folder _${appFolder}/src/[sourceSet]/play/listings/[locale]/graphics/wear-screenshots/_ must have 8 images (png|jpg|jpeg) or less.
+- `Invalid icon image dimensions`: The images in _${appFolder}/src/[sourceSet]/play/listings/[locale]/graphics/icon/_ must have dimensions 512x512.
+- `Invalid feature-graphic image dimensions`: The images in _${appFolder}/src/[sourceSet]/play/listings/[locale]/graphics/feature-graphic/_ must have dimensions 1024x500.
+- `Invalid phone-screenshots image dimensions`: The images in _${appFolder}/src/[sourceSet]/play/listings/[locale]/graphics/phone-screenshots/_ must have dimensions between [320,3840]x[320,3840].
+- `Invalid tablet-screenshots image dimensions`: The images in _${appFolder}/src/[sourceSet]/play/listings/[locale]/graphics/tablet-screenshots/_ must have dimensions between [320,3840]x[320,3840].
+- `Invalid large-tablet-screenshots image dimensions`: The images in _${appFolder}/src/[sourceSet]/play/listings/[locale]/graphics/large-tablet-screenshots/_ must have dimensions between [320,3840]x[320,3840].
+- `Invalid tv-banner image dimensions`: The images in _${appFolder}/src/[sourceSet]/play/listings/[locale]/graphics/tv-banner/_ must have dimensions 1280x720.
+- `Invalid tv-screenshots image dimensions`: The images in _${appFolder}/src/[sourceSet]/play/listings/[locale]/graphics/tv-screenshots/_ must have dimensions between [320,3840]x[320,3840].
+- `Invalid wear-screenshots image dimensions`: The images in _${appFolder}/src/[sourceSet]/play/listings/[locale]/graphics/wear-screenshots/_ must have dimensions between [320,3840]x[320,3840].
 
 
 ## Inputs
