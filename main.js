@@ -20,21 +20,21 @@ function main(){
   console.log("Validating files:");
 
   // foreach sourceSet
-  let srcPath = join(appFolder, 'src');
+  const srcPath = join(appFolder, 'src');
   if(!existsSync(srcPath)) log('SKIP', `No src folder found (${srcPath}), is 'appFolder' input correct?`);
   else dirs(srcPath).forEach(([sourceSet, sourceSetPath]) => {
     log(`SourceSet '${sourceSet}':`); 
     pad(()=>{
 
       // check default language file
-      let defaultLanguagePath = join(sourceSetPath, "play", "default-language.txt");
+      const defaultLanguagePath = join(sourceSetPath, "play", "default-language.txt");
       // check exists
       if(!existsSync(defaultLanguagePath)){
         log('ERROR', `'default-language.txt'`);
         error("Missing default-language.txt", defaultLanguagePath, `The file 'default-language.txt' (${defaultLanguagePath}) is missing. It just needs to contain the default locale (for example "en-US").`);
       }else{
         // and check valid
-        let defaultLanguage = readFileSync(defaultLanguagePath).toString().trim();
+        const defaultLanguage = readFileSync(defaultLanguagePath).toString().trim();
         if(!validLocales.includes(defaultLanguage)){
           log('ERROR', `'default-language.txt'`);
           error("Invalid default-language.txt", defaultLanguagePath, `The file 'default-language.txt' (${defaultLanguagePath}) is not a valid Play Store locale: https://support.google.com/googleplay/android-developer/answer/9844778#zippy=%2Cview-list-of-available-languages`);      
@@ -44,10 +44,10 @@ function main(){
       }
 
       // for each listing locale
-      let listingsPath = join(sourceSetPath, "play", "listings");
+      const listingsPath = join(sourceSetPath, "play", "listings");
       if(!existsSync(listingsPath)) log('SKIP', `No listings folder found (${listingsPath}), skipped`);
       else dirs(listingsPath).forEach(([locale, localePath]) => {
-        let validLocale = validLocales.includes(locale);
+        const validLocale = validLocales.includes(locale);
         log(validLocale?'OK':'ERROR', `Listing locale '${locale}':`);
 
         // check locale label
@@ -110,14 +110,14 @@ function main(){
               pad(() => images.forEach(([image, imagePath])=>{
 
                 // check dimensions
-                let [width, height] = getDimensions(imagePath);
-                let compare = (value, range) => (typeof range) == 'number' ? value == range : value >= range[0] && value <= range[1];
-                let validDimensions = compare(width, validWidth) && compare(height, validHeight);
+                const [width, height] = getDimensions(imagePath);
+                const compare = (value, range) => (typeof range) == 'number' ? value == range : value >= range[0] && value <= range[1];
+                const validDimensions = compare(width, validWidth) && compare(height, validHeight);
                 log(validDimensions ? 'OK' : 'ERROR', `'${image}' width: ${width}/${JSON.stringify(validWidth)}, height: ${height}/${JSON.stringify(validHeight)}`);
 
                 if(!validDimensions){
                   // invalid dimensions, error
-                  let txt = (range) => (typeof range) == 'number' ? range : `between ${range[0]} and ${range[1]}`;
+                  const txt = (range) => (typeof range) == 'number' ? range : `between ${range[0]} and ${range[1]}`;
                   error(`Invalid {folder} image dimensions`, imagePath, `The ${folder} image ${image} (${imagePath}) must have width ${txt(validWidth)}, has ${width}; and height ${txt(validHeight)}, has ${height}`);
                 }
 
@@ -134,14 +134,15 @@ function main(){
       });
 
       // for each release locale
-      let releaseNotesPath = join(sourceSetPath, "play", "release-notes");
+      const releaseNotesPath = join(sourceSetPath, "play", "release-notes");
       if(!existsSync(releaseNotesPath)) log('SKIP', `No release-notes folder found (${releaseNotesPath}), skipped`);
       else dirs(releaseNotesPath).forEach(([locale, localePath]) => {
-        let validLocale = validLocales.includes(locale);
+        // check locale label
+        const validLocale = validLocales.includes(locale);
         log(validLocale?'OK':'ERROR', `Release-notes locale '${locale}':`);
 
-        // check locale label
         if(!validLocale){
+          // invalid locale, error
           error("Invalid release-notes locale", localePath, `The locale '${locale}' (${localePath}) is not a valid Play Store locale: https://support.google.com/googleplay/android-developer/answer/9844778#zippy=%2Cview-list-of-available-languages`);
         }
 

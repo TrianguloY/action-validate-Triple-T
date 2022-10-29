@@ -8,5 +8,5 @@ I don't have a coding style, but try to keep it similar to existing code, with j
 
 You can check existing code to see examples, but be aware that some are not perfect. In doubt, just ask.
 
-This action doesn't use any external toolkits (no node_modules needed) because for me it was easier to just create a single js with the logic.
-However I'm not opposed to using external ones if they help and reduce the amount of code (specially @actions/core and @actions/github) but if so please specify why you think it's needed, and try to reduce the file-clutter to a minimum.
+This action doesn't use any external toolkits (no node_modules needed) because for me, it was easier to just create a single js with the logic.
+However, I'm not opposed to using external ones if they help and reduce the amount of code (specially @actions/core and @actions/github) but if so please specify why you think it's needed, and try to reduce the file-clutter to a minimum.
