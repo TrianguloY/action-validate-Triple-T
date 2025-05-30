@@ -23,6 +23,10 @@ function main(){
   const srcPath = join(appFolder, 'src');
   if(!existsSync(srcPath)) log('SKIP', `No src folder found (${srcPath}), is 'appFolder' input correct?`);
   else dirs(srcPath).forEach(([sourceSet, sourceSetPath]) => {
+    if(!existsSync(join(sourceSetPath, "play"))){
+      log(`Skipped SourceSet '${sourceSet}' without play folder.`); 
+      return;
+    }
     log(`SourceSet '${sourceSet}':`); 
     pad(()=>{
 
